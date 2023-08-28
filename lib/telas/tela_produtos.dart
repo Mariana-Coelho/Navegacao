@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:navegacao/models/categorias.dart';
 
 class TelaProdutos extends StatelessWidget {
-  final Categoria categoria;
-
-  TelaProdutos(this.categoria);
-
+ 
   // Exemplo de lista de pratos relacionados à categoria
   List<Prato> pratosDaCategoria = [
     Prato("Lasanha", "Uma deliciosa lasanha de carne com molho de tomate e queijo derretido.", "lasanha.jpg"),
@@ -15,6 +12,11 @@ class TelaProdutos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoria = ModalRoute.of(context)?.settings.arguments as Categoria;
+
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Tela Produtos"),
