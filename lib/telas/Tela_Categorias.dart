@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:navegacao/componentes/item_categoria.dart';
-import 'package:navegacao/data/mock_data.dart';
-import 'package:navegacao/models/categorias.dart';
+import '../componentes/categoria_item.dart';
+import '../data/mock_data.dart';
 
-class TelaCategoria extends StatelessWidget{
+class TelaCategorias extends StatelessWidget {
+  
+
   @override
-  Widget build(BuildContext){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cardapio"),
+      appBar : AppBar(
+        title: Text("Cardápio do CEFETMG"),
       ),
-body: GridView(
-  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-    maxCrossAxisExtent: 200,
-    childAspectRatio: 3/2,
-    crossAxisSpacing: 20,
-    mainAxisSpacing: 20,
-  ),
-  children: mockCategories.map(
-    (categoria){
-      return ItemCategoria(categoria);
-
-    }
-).toList(),
-    ),
+      body: GridView(
+        padding: const EdgeInsets.all(25),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent( //basicamente uma barra de rolagem
+          maxCrossAxisExtent: 200, //cada elemento tem extensão de 200
+          childAspectRatio: 3/2, //proporção de cada elemento dentro do grid
+          crossAxisSpacing: 20, // eixo cruzado de 20
+          mainAxisSpacing: 20 //espaçamento no main olhar
+    
+        ),
+        children: mockCategories.map((e) {
+          return CategoriaItem(e);
+        }).toList(),
+      ),
     );
   }
 }

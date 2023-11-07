@@ -1,16 +1,10 @@
-import 'package:navegacao/Telas/tela_produtos.dart';
-import 'package:navegacao/data/produto.dart';
-import 'package:navegacao/models/produtos.dart';
 import 'package:flutter/material.dart';
-import 'utils/rotas.dart';
 
 //depois de programar a tela
 import 'Telas/tela_categorias.dart';
- 
 void main() => runApp(AppCardapio());
  // style: Theme.of(context).textTheme.titleSmall, vai no categoria
 class AppCardapio extends StatelessWidget {
-  List<Produto> produtosValidos = dummyProdutos;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,13 +19,26 @@ class AppCardapio extends StatelessWidget {
           ) 
         )
       ),
-      //home: TelaCategorias(),
-      routes: {
-        Rotas.HOME : (ctx) => TelaCategorias(),
-        Rotas.PRODUTOS : (ctx) => TelaProdutos(produtosValidos), 
-      }
-      
+      home: TelaCategorias(),
     );
   }
 }
  
+class PaginaInicial extends StatefulWidget {
+  @override
+  PaginaInicialState createState() => PaginaInicialState();
+}
+ 
+class PaginaInicialState extends State<PaginaInicial> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cardápio'),
+      ),
+      body: Center(
+        child: Text('Corpo do meu APP'),
+      ),
+    );
+  }
+}

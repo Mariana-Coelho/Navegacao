@@ -1,64 +1,57 @@
+import 'package:navegacao/componentes/produto_item.dart';
+import 'package:navegacao/models/produtos.dart';
 import 'package:flutter/material.dart';
-import 'package:navegacao/models/categorias.dart';
 
-class TelaProdutos extends StatelessWidget {
- 
-  // Exemplo de lista de pratos relacionados à categoria
-  List<Prato> pratosDaCategoria = [
-    Prato("Lasanha", "Uma deliciosa lasanha de carne com molho de tomate e queijo derretido.", "lasanha.jpg"),
-    Prato("Strogonoff", "Strogonoff de frango com molho cremoso e arroz branco.", "strogonoff.jpg"),
-    Prato("Batata frita", "Batatas fritas crocantes e douradas, perfeitas para petiscar.", "batata_frita.jpg"),
-  ];
+class TelaProdutos extends StatefulWidget {
+  static const routeName = '/produtos';
+  final List<Produto> produtosValidos;
+  TelaProdutos(this.produtosValidos);
 
   @override
+  State<TelaProdutos> createState() => _TelaProdutosState();
+}
+
+class _TelaProdutosState extends State<TelaProdutos> {
+  String? tituloCategoria;
+  List<Produto>? displayProdutos;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    tituloCategoria = routeArgs['title']!;
+    final categoryId = routeArgs['id'];
+    displayProdutos = widget.produtosValidos.where((meal) {
+      return meal.categories.contains(categoryId);
+    }).toList();
+    super.didChangeDependencies();
+  }
+
+  // void _removeMeal(String mealId) {
+  //   setState(() {
+  //     displayedMeals!.removeWhere((meal) => meal.id == mealId);
+  //   });
+  // }
+
+  // final String categoryId;
+  @override
   Widget build(BuildContext context) {
-    final categoria = ModalRoute.of(context)?.settings.arguments as Categoria;
-
-
-
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Tela Produtos"),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text("A categoria escolhida foi ${categoria.titulo}", style: TextStyle(fontSize: 18)),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: pratosDaCategoria.length,
-              itemBuilder: (ctx, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Card(
-                    child: ListTile(
-                      title: Text(pratosDaCategoria[index].nome),
-                      subtitle: Text(pratosDaCategoria[index].descricao),
-                      leading: Image.asset(
-                        pratosDaCategoria[index].caminhoImagem,
-                        width: 70, // ajuste o tamanho da imagem conforme necessário
-                        height: 70,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      appBar: AppBar(title: Text(tituloCategoria!)),
+      body: ListView.builder(
+        itemBuilder: (ctx, index) {
+          return ItemProduto(
+            id: displayProdutos![index].id,
+            title: displayProdutos![index].title,
+            imageUrl: displayProdutos![index].imageUrl,
+            duration: displayProdutos![index].duration,
+            cost: displayProdutos![index].cost,
+          );
+          // return Text(displayedMeals[index].title);
+        },
+        itemCount: displayProdutos!.length,
       ),
     );
   }
-}
-
-// Modelo de Prato (substitua pelas suas classes/modelos reais)
-class Prato {
-  final String nome;
-  final String descricao;
-  final String caminhoImagem;
-
-  Prato(this.nome, this.descricao, this.caminhoImagem);
 }
