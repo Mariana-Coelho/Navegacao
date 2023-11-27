@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 //depois de programar a tela
-import 'Telas/tela_categorias.dart';
+import 'Telas/tela_categoria.dart';
+ 
 void main() => runApp(AppCardapio());
  // style: Theme.of(context).textTheme.titleSmall, vai no categoria
 class AppCardapio extends StatelessWidget {
